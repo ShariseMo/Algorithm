@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>省市区街道四级联动</title>
+	<script type="text/javascript" src="jquery.min.js"></script>
+	<style type="text/css">
+		select{width:150px;}
+	</style>
+</head>
+<body>
+	<div class="main">
+		<select id="province"></select>
+		<select id="city"></select>
+		<select id="district"></select>
+		<select id="street"></select>
+	</div>
+	<script type="text/javascript" src="areaList.js"></script>
+	<script type="text/javascript">
+		// 修改地址(四级联动)
+	function areaSelect(province,city,district,street){
+		var html = "<option>===请选择省份===</option>";
+		$(city).append("<option>===请选择城市===</option>");
+		$(district).append("<option>===请选择区县===</option>");
+		$(street).append("<option>===请选择镇/街道===</option>");
+		for(var i = 0;i<areaList.length;i++){
+			var pp = areaList[i];
+			html += "<option value='"+pp['code']+"' parentid='"+pp['parentId']+"'>"+pp['name']+"</option>";
+		}
+		$(province).html(html);
+
+		$(province).change(function(){
+			if($(this).val()=="")  return;
+			$(city+' option').remove();
+			$(district+' option').remove();
+			$(street+' option').remove();
+			var code = $(this).find('option:selected').val();
+			var html = "<option>===请选择城市===</option>";
+			for(var i = 0;i<areaList.length;i++){
+				for(var j = 0;j<areaList[i]['subordinates'].length;j++){
+					var cc = areaList[i]['subordinates'][j];
+					if(cc['parentId'] == code){
+						html += "<option value='"+cc['code']+"' parentid='"+cc['parentId']+"'>"+cc['name']+"</option>";
+					}
+				}
+			}
+			$(city).html(html);
+			// $(district).css('display','none');
+			// $(street).css('display','none');
+		});
+
+		$(city).change(function(){
+			if($(this).val()=="") return;
+			$(district+' option').remove();
+			$(street+' option').remove();
+			var code = $(this).find('option:selected').val();
+			var html = "<option>===请选择区县===</option>";
+			for(var i = 0;i<areaList.length;i++){
+				for(var j = 0;j<areaList[i]['subordinates'].length;j++){
+					for(var k = 0;k<areaList[i]['subordinates'][j]['subordinates'].length;k++){
+						var dd = areaList[i]['subordinates'][j]['subordinates'][k];
+						if(dd['parentId'] == code){
+							html += "<option value='"+dd['code']+"' parentid='"+dd['parentId']+"'>"+dd['name']+"</option>";
+						}
+					}
+				}
+			}
+			// $(district).css('display','inline-block');
+			$(district).html(html);
+			// $(street).css('display','none');
+		});
+
+		$(district).change(function(){
+			if($(this).val()=="") return;
+			$(street+' option').remove();
+			var code = $(this).find('option:selected').val();
+			var html = "<option>===请选择镇/街道===</option>";
+			for(var i = 0;i<areaList.length;i++){
+				for(var j = 0;j<areaList[i]['subordinates'].length;j++){
+					for(var k = 0;k<areaList[i]['subordinates'][j]['subordinates'].length;k++){
+						for(var l = 0;l<areaList[i]['subordinates'][j]['subordinates'][k]['subordinates'].length;l++){
+							var tt = areaList[i]['subordinates'][j]['subordinates'][k]['subordinates'][l];
+							if(tt['parentId'] == code){
+								html +=  "<option value='"+tt['code']+"' parentid='"+tt['parentId']+"'>"+tt['name']+"</option>";
+							}
+						}
+					}
+				}
+			}
+			// $(street).css('display','inline-block');
+			$(street).html(html);
+		});
+	}
+
+
+	areaSelect("#province","#city","#district","#street");
+	</script>
+</body>
+</html>
