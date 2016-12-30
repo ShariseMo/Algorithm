@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset=UTF-8>
+<title>checkBox全选反选（JS版）</title>
+<style type="text/css">
+</style>
+<!-- <script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script> -->
+<script type="text/javascript">
+    onload = function (){
+        var checkAll = document.getElementById ("checkAll");
+        var odiv = document.getElementById ("chk_group");
+        var checkOne = odiv.getElementsByTagName ("input");
+        
+
+        checkAll.onclick = function (){
+            for ( var i = 0; i < checkOne.length; i++){
+                checkOne[i].checked = this.checked;
+            }
+        };
+         
+        for ( var i = 0; i < checkOne.length; i++){
+            checkOne[i].onclick = function (){
+                if ( !this.checked ){
+                    checkAll.checked = false;
+                }
+                 
+                var flag = true;
+                for ( var i = 0; i < checkOne.length; i++){
+                    if (!checkOne[i].checked){
+                        console.log(i);
+                        flag = false;
+                        break;
+                    }
+                }
+                if (flag){
+                    checkAll.checked = true;
+                }
+            };
+        }
+    }
+</script>
+</head>
+<body>
+    <label><input id="checkAll" type="checkbox" />全选</label>
+     
+    <div id="chk_group">
+        <label><input type="checkbox" />1</label><br /> 
+        <label><input type="checkbox" />2</label><br />
+        <label><input type="checkbox" />3</label><br />
+        <label><input type="checkbox" />4</label><br />
+    </div>
+</body>
+</html>
