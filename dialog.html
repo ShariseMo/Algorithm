@@ -82,7 +82,7 @@
         <!-- <form > -->
             <input type="text" name="title" placeholder="请填写标题" id="commentTitle"/><br>
             <textarea placeholder="请填写评论内容" id="commentContent"></textarea><br>
-            <input type="" name="" value="提交" class="btn btn_blue" onclick="getText('#commentTitle','#commentContent')">
+            <input type="button" name="" value="提交" class="btn btn_blue" onclick="getText('#commentTitle','#commentContent')">
         <!-- </form> -->
     </div>
     
@@ -141,7 +141,8 @@
         function getText(title,content){
             var t = $(title).val();
             var c = $(content).val();
-            // $("#commentList").append('<a href="#" id="hello" class="btn btn_blue" onclick="dialog('+t+','+c+')">'+t+'</a>');
+            $("#commentList").append('<a href="#" id="hello" class="btn btn_blue" >'+t+'</a>');
+            console.log('<a href="#" id="hello" class="btn btn_blue" onclick="dialog('+t+','+c+')">'+t+'</a>');
             dialog(t,c);
         } 
 
