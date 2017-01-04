@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>屏幕大小自适应</title>
+</head>
+<body>
+    <h4>屏幕字体大小自适应函数，要用rem单位，主要适应手机端网页布局等[根据屏幕大小设置根元素字体大小，从而可以根据rem的对比对具体的字体大小做出调整]</h4>
+    <script type="text/javascript">
+        (function () {
+            var b = document.documentElement,
+            a = function () {
+                var a = b.getBoundingClientRect().width;
+                b.style.fontSize = (100/750) * (a >= 750 ? 750 : a) + "px"
+            }, c = null;
+            window.addEventListener("resize", function () {
+                clearTimeout(c);
+                c = setTimeout(a, 300)
+            });
+            a();
+        })();
+    </script>
+</body>
+</html>
