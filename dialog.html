@@ -68,17 +68,27 @@
         font-size:14px;
     }
     .oper_btns{width:380px;text-align:right;}
+    /*评论*/
+    .commentBox{padding:50px;}
+    .commentBox input,textarea{width:200px;line-height:1;margin:10px;padding:5px;}
+    .commentBox textarea{width:300px;height:100px;}
+    .commentBox .btn_blue{width: 100px;}
     </style>
 </head>
 <body>
     <!-- 填写标题与内容，点击提交即可在弹出框中看见 -->
-    <div id="commentBox">
-        <form>
-             <input type="text" name="title" placeholder="请填写标题" />
-             <textarea placeholder="请填写评论内容"></textarea>
-        </form>
+    <div class="commentBox">
+            <h4>你写什么我就弹出什么：</h4>
+        <!-- <form > -->
+            <input type="text" name="title" placeholder="请填写标题" id="commentTitle"/><br>
+            <textarea placeholder="请填写评论内容" id="commentContent"></textarea><br>
+            <input type="" name="" value="提交" class="btn btn_blue" onclick="getText('#commentTitle','#commentContent')">
+        <!-- </form> -->
     </div>
-
+    
+    <div id="commentList">
+        
+    </div>
     <a href="#" id="hello" class="btn btn_blue" onclick="dialog('Hello','This is hello box!')">Hello</a>
     <a href="#" id="bye" class="btn btn_blue" onclick="dialog('Bye','This is bye box!')">Bye</a>
 
@@ -100,25 +110,40 @@
 
     <script type="text/javascript" src="./jquery.min.js"></script>
     <script type="text/javascript">
+        //弹出框 
         function dialog(title,msg){
             $(".title_name").html(title);
             $(".dialog_content p").html(msg);
             $(".mask").show();
         }
-
+        // 取消弹框
         function hideDialog(){
             $(".mask").hide();
             $(".title_name").html("");
             $(".dialog_content p").html("");
         }
 
+        // 可拖动
         function move(){   
             $(".dialog").css("left",event.clientX);
             $(".dialog").css("top",event.clientY);
         }
         document.onmouseup = function() {
             document.onmousemove = null;
-        }   
+        }  
+
+        // var comment = new Object();
+        // comment.title="hello22222";
+        // comment.content="This a hello box!";
+        // dialog(comment.title,comment.content);
+
+        //获取评论框消息
+        function getText(title,content){
+            var t = $(title).val();
+            var c = $(content).val();
+            // $("#commentList").append('<a href="#" id="hello" class="btn btn_blue" onclick="dialog('+t+','+c+')">'+t+'</a>');
+            dialog(t,c);
+        } 
 
     </script>
 </body>
