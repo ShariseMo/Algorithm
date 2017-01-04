@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>弹窗</title>
+    <style type="text/css">
+    *{margin:0;padding:0;font-family:"Microsoft YaHei";}
+    a{text-decoration: none;}
+    .btn{
+        display:inline-block;
+        padding:5px 20px;
+        border-radius:3px;
+        text-align:center;
+        font-size:14px;
+        margin:15px 10px;
+    }
+    .btn_blue{
+        background:#4A90EB;
+        color:#fff;
+        &:hover{color:#fff;}
+        &:visited{color:#fff;}
+    }
+    .btn_gray{
+        background:#F3F3F3;
+        color:#000;
+        border:1px solid #DCDCDC;
+    }
+   .mask{
+        z-index:99;
+        display:none;
+        width:100%;
+        height:100%;
+        position:fixed;
+        top:0;
+        left:0;
+        background:rgba(0,0,0,0.5);
+    }
+    .dialog{
+        position:absolute;
+        width:400px;
+        top:200px;
+        left:calc(50% - 200px);  /*使用calc()计算方法时，必须在表达式上加上空格*/
+        background:#fff;
+    }
+    .dialog_title{
+        width:100%;
+        height:50px;
+        line-height:50px;
+        background:#F9F9F9;
+        color:#797979;
+        border-bottom:1px solid #E4E4E4;
+        cursor:default;
+    }
+    .dialog_title .title_name{margin-left:15px;}
+    .btn_close{
+        position:absolute;
+        height:50px;
+        line-height:50px;
+        padding:0 15px;
+        right:0;    
+        font-size:20px;
+        border-left:1px solid #E4E4E4;
+        cursor:pointer;
+    }
+    .dialog_content{
+        width:94%;
+        padding:3%;
+        font-size:14px;
+    }
+    .oper_btns{width:380px;text-align:right;}
+    </style>
+</head>
+<body>
+    <!-- 填写标题与内容，点击提交即可在弹出框中看见 -->
+    <div id="commentBox">
+        <form>
+             <input type="text" name="title" placeholder="请填写标题" />
+             <textarea placeholder="请填写评论内容"></textarea>
+        </form>
+    </div>
+
+    <a href="#" id="hello" class="btn btn_blue" onclick="dialog('Hello','This is hello box!')">Hello</a>
+    <a href="#" id="bye" class="btn btn_blue" onclick="dialog('Bye','This is bye box!')">Bye</a>
+
+    <div class="mask">
+        <div class="dialog" onmousedown="document.onmousemove=move">
+            <h3 class="dialog_title">
+                <span class="title_name"></span>
+                <span class="btn_close" onclick="hideDialog()">X</span>
+            </h3>
+            <div class="dialog_content">
+                <p></p>
+            </div>
+            <div class="oper_btns">
+                <a href="javascript:;" class="btn btn_blue">确认</a>
+                <a href="javascript:;" class="btn btn_gray" onclick="hideDialog()">取消</a>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript" src="./jquery.min.js"></script>
+    <script type="text/javascript">
+        function dialog(title,msg){
+            $(".title_name").html(title);
+            $(".dialog_content p").html(msg);
+            $(".mask").show();
+        }
+
+        function hideDialog(){
+            $(".mask").hide();
+            $(".title_name").html("");
+            $(".dialog_content p").html("");
+        }
+
+        function move(){   
+            $(".dialog").css("left",event.clientX);
+            $(".dialog").css("top",event.clientY);
+        }
+        document.onmouseup = function() {
+            document.onmousemove = null;
+        }   
+
+    </script>
+</body>
+</html>
