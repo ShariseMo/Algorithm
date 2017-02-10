@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>对高阶函数 的相似函数的列举</title>
+</head>
+<body>
+	<script type="text/javascript">
+	// demo1
+		// 高阶函数
+		// 什么是高阶函数,也就是传递函数，返回函数
+		// 一般使用场景是回调。
+
+		// 传递函数
+		function foo(bar) {
+			bar();
+		}
+		foo(function() {
+			console.log('回调');
+		});
+
+
+		// 返回函数
+		function foo() {
+			return function() {
+		  	// TODO do something
+		  }
+		}
+		// 有人会问返回函数有什么作用？保护作用域
+		// 比如每秒加一
+		// 一般写法
+		var count = 0; // 这个会污染全局变量。暴露了count，每秒加一就不能得到保证
+		setInterval(function() {
+			console.log(count);
+			count++;
+		}, 1000);
+
+		// 高阶函数版，保护作用域
+		setInterval(function() {
+			var count = 0; // 变量在这里了，不受外部干扰
+			return function() {
+		  	console.log(count);
+				count++;
+		  }
+		}, 1000);
+	</script>
+	<!-- demo2 -->
+	<div>
+		<h5>点击不能正确输出位置信息</h5>
+		<ul id="exclude">
+		  <li>点击我输出1</li>
+		  <li>点击我输出2</li>
+		  <li>点击我输出3</li>
+		  <li>点击我输出4</li>
+		</ul>
+
+		<h5>点击能正确输出位置信息</h5>
+		<ul id="perfect">
+		  <li>点击我输出1</li>
+		  <li>点击我输出2</li>
+		  <li>点击我输出3</li>
+		  <li>点击我输出4</li>
+		</ul>
+	</div>
+	<script type="text/javascript">
+		// 高阶函数能解决的典型问题就是作用域（用闭包的方式）
+		// 为li绑定事件，输出相应位置信息
+		(function() {
+			var lis = document.getElementById('exclude').children;
+		  for (var i=0; i<lis.length; i++) {
+		  	lis[i].addEventListener('click', function() {
+		    	// 因为作用域问题，总是输出4
+		    	alert(i);
+		    });
+		  }
+		})();
+
+		// 解决方法有用jquery的each方法，也能使用闭包
+		(function() {
+			var lis = document.getElementById('perfect').children;
+		  for (var i=0; i<lis.length; i++) {
+		  	lis[i].addEventListener(
+		    'click', 
+		    // 闭包
+		    (function(idx) {
+		      return function() {alert(idx);}
+		    })(i));
+		  }
+		})();
+	</script>
+
+	<!-- demo3 -->
+	<script type="text/javascript">
+		// 注意： 打开调试面板，看输出
+		// 指的是固化函数的一个或一些参数，从而产生一个新的函数。
+		// 实例来看下，判断类型
+		var toString = Object.prototype.toString;
+		var isString = function(obj) {
+			return toString.call(obj) == '[object String]';
+		}
+		var isFunction = function(obj) {
+			return toString.call(obj) == '[object Function]';
+		}
+		console.log(isString('')); // true
+		console.log(isString([])); // false
+		console.log(isFunction(function() {})); // true
+		console.log(isFunction(1)); // false
+		console.log('\n-----------华丽分割线-------------\n');
+		// 上面代码不复杂。定义几个，你不会很累。
+		// 但是有更多的isXXX(), 就会出现更多代码冗余
+		// 为了解决重复定义问题，所以引入了偏函数
+		var isType = function(type) {
+			return function(obj) {
+		  	return toString.call(obj) == '[object ' + type + ']';
+		  }
+		}
+		var isString2 = isType('String');
+		var isFunction2 = isType('Function');
+
+		console.log(isString2('')); // true
+		console.log(isString2([])); // false
+		console.log(isFunction2(function() {})); // true
+		console.log(isFunction2(1)); // false
+
+		console.log('\n-----------华丽分割线-------------\n');
+		// 偏函数不但能解决重复定义问题
+		// 还能解决异步。场景：
+		// 上传多个文件，全部上传完，才能提交
+		/**
+		 * 执行指定次数后才真正执行方法
+		 *
+		 * @param times 次数
+		 * @param func 
+		 *
+		 */
+		function after(times, func) {
+			if (times <= 0) return func();
+			return function() {
+		  	if (--times<1) { return func.apply(this, arguments); }
+		  }
+		}
+		// 要上传的文件
+		var files = ['file1', 'file2', 'file3'];
+		var sumit = after(files.length, function() {
+			console.log('提交from');
+		});
+		function uploadFile(file) {
+			// 模拟文件上次，异步
+			setTimeout(function() {
+		  	console.log(file + ' 文件上传成功');
+		    sumit();
+		  })
+		}
+		// 开始上传文件
+		for(var i=0; i<files.length; i++) {
+			uploadFile(files[i]);
+		}
+
+		console.log('\n-----------华丽分割线-------------\n');
+
+		// 函数柯里化，作用就是更好地表达自己
+		// 只有一个参数，并且可以链式调用的是函数柯里化
+		function divide(dividend) {
+			return function(divisor) {
+		  	return dividend/divisor;
+		  }
+		}
+		// 9/3
+		var re = divide(9)(3);
+		console.log("9/3=" + re);
+
+	</script>
+</body>
+</html>
