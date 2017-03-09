@@ -5,8 +5,9 @@
 	<title>对高阶函数 的相似函数的列举</title>
 </head>
 <body>
+ <!-- ====================demo1======================== -->
 	<script type="text/javascript">
-	// demo1
+	
 		// 高阶函数
 		// 什么是高阶函数,也就是传递函数，返回函数
 		// 一般使用场景是回调。
@@ -31,20 +32,20 @@
 		// 一般写法
 		var count = 0; // 这个会污染全局变量。暴露了count，每秒加一就不能得到保证
 		setInterval(function() {
-			console.log(count);
+			// console.log(count);
 			count++;
 		}, 1000);
 
 		// 高阶函数版，保护作用域
 		setInterval(function() {
 			var count = 0; // 变量在这里了，不受外部干扰
-			return function() {
-		  	console.log(count);
+			return (function() {
 				count++;
-		  }
+				// console.log(count);
+		  })()
 		}, 1000);
 	</script>
-	<!-- demo2 -->
+	<!-- ============================demo2================================= -->
 	<div>
 		<h5>点击不能正确输出位置信息</h5>
 		<ul id="exclude">
@@ -89,7 +90,7 @@
 		})();
 	</script>
 
-	<!-- demo3 -->
+	<!-- ================================demo3=============================== -->
 	<script type="text/javascript">
 		// 注意： 打开调试面板，看输出
 		// 指的是固化函数的一个或一些参数，从而产生一个新的函数。
@@ -168,6 +169,46 @@
 		// 9/3
 		var re = divide(9)(3);
 		console.log("9/3=" + re);
+
+	</script>
+
+	<!-- =====================demo4【用closure做module】=================== -->
+	<script type="text/javascript">
+	var foo = (function CoolModule(){
+		var sth = "cool";
+		var another = [1,2,3];
+		function doSth(){
+			console.log(sth);
+		}
+		function doAnother(){
+			console.log(another.join("!"));
+		}
+		return {
+			doSth:doSth,
+			doAnother:doAnother
+		}
+	})();
+	foo.doSth();
+	foo.doAnother();
+
+
+	function bar(){
+		var sth = "aa";
+		var another = [3,4,5];
+		function doSth(){
+			console.log(sth);
+		}
+		function doAnother(){
+			console.log(another.join("~"));
+		}
+		return {
+			doSth : doSth,
+			doAnother : doAnother
+		}
+	};
+
+	bar().doSth();
+	bar().doAnother();
 
 	</script>
 </body>
