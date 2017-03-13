@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>倒计时实例</title>
+    <script type="text/javascript" src="./jquery-2.1.4.min.js"></script>
+</head>
+<body>
+      <div class="djs">
+         <div class="timer_box">
+            距离活动<label id="beginOrEnd">开始</label>还有
+             <span id="timer_day">0</span>
+             天
+             <span id="timer_hour">0</span>
+             时
+             <span id="timer_minute">0</span>
+             分
+             <span id="timer_second">0</span>
+             秒
+         </div>
+     </div>
+    <script type="text/javascript">
+        $(function(){
+            var activeTimer = setInterval("timerCount(2017,03,16)", 1000);
+        });
+
+        function timerCount(year,month,day) {
+            // 距离开始还有多长时间
+            var end = new Date(year+'/'+month+'/'+day).getTime();
+                now = new Date().getTime(),
+                timeObj = {};
+            var lessTime = end - now;
+            if(lessTime <= 0){
+                $("#timer_day").text(0);
+                $("#timer_hour").text(0);
+                $("#timer_minute").text(0);
+                $("#timer_second").text(0);
+            }else{
+                timeObj.day = Math.floor(lessTime / 1000 / 60 / 60 / 24);
+                dayTime = timeObj.day * 24 * 3600 * 1000;
+                timeObj.hour = Math.floor(lessTime / 1000 / 60 / 60 % 24);
+                hourTime = timeObj.hour * 3600 * 1000;
+                timeObj.minute = Math.floor(lessTime / 1000 / 60 % 60);
+                minuteTime = timeObj.minute * 60 * 1000;
+                timeObj.second = Math.floor(lessTime / 1000 % 60);
+                secondTime = timeObj.second * 1000;
+
+                $("#timer_day").text(timeObj.day);
+                $("#timer_hour").text(timeObj.hour);
+                $("#timer_minute").text(timeObj.minute);
+                $("#timer_second").text(timeObj.second);
+            }    
+        }
+
+    </script>
+</body>
+</html>

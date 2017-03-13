@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>aaaaa</title>
+    <link rel="stylesheet" type="text/css" href="./chosen/chosen.css">
+    <script type="text/javascript" src="./jquery-2.1.4.min.js"></script>
+    <script type="text/javascript" src="./chosen/chosen.jquery.js"></script>
+    <style type="text/css">
+        .aa{min-width:300px;}
+    </style>
+</head>
+<body>
+    <select class="aa">  
+    </select>
+    <script type="text/javascript">
+
+        var data = [
+            {name:"aadfffffffffffaaa",value:"1"},
+            {name:"bbbbb",value:"2"},
+            {name:"ccccc",value:"3"},
+            {name:"aaaaa",value:"1"},
+            {name:"ccccc",value:"3"},
+            {name:"aaaaa",value:"1"},
+            {name:"bbbbb",value:"2"},
+            {name:"ccccc",value:"3"},
+            {name:"aaaaa",value:"1"},
+            {name:"bbbbb",value:"2"},
+            {name:"ccccc",value:"3"},
+            {name:"aadfffffffffffaaa",value:"1"},
+            {name:"bbbbb",value:"2"},
+            {name:"ccccc",value:"3"},
+            {name:"aaaaa",value:"1"},
+            {name:"ccccc",value:"3"},
+            {name:"aaaaa",value:"1"},
+            {name:"bbbbb",value:"2"},
+            {name:"ccccc",value:"3"},
+            {name:"aaaaa",value:"1"},
+            {name:"bbbbb",value:"2"},
+            {name:"ccccc",value:"3"},
+            {name:"aadfffffffffffaaa",value:"1"},
+            {name:"bbbbb",value:"2"},
+            {name:"ccccc",value:"3"},
+            {name:"aaaaa",value:"1"},
+            {name:"ccccc",value:"3"},
+            {name:"aaaaa",value:"1"},
+            {name:"bbbbb",value:"2"},
+            {name:"ccccc",value:"3"},
+            {name:"aaaaa",value:"1"},
+            {name:"bbbbb",value:"2"},
+            {name:"ccccc",value:"3"},
+            {name:"aadfffffffffffaaa",value:"1"},
+            {name:"bbbbb",value:"2"},
+            {name:"ccccc",value:"3"},
+            {name:"aaaaa",value:"1"},
+            {name:"ccccc",value:"3"},
+            {name:"aaaaa",value:"1"},
+            {name:"bbbbb",value:"2"},
+            {name:"ccccc",value:"3"},
+            {name:"aaaaa",value:"1"},
+            {name:"bbbbb",value:"2"},
+            {name:"ccccc",value:"3"},
+        ];
+
+
+        // $(".aa").append("<option>"++"</option>");
+        var ops = data.map(function(item){
+            var op = $("<option></option>");
+            op.val(item.value);
+            op.text(item.name);
+            return op;
+        });
+        $(".aa").append(ops);
+        // console.log(ops);
+        $(".aa").chosen();
+    </script>
+</body>
+</html>
