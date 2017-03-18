@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>aaaa</title>
+    <script type="text/javascript" src="areaList.js"></script>
+    <script type="text/javascript" src="./AreaSelect4fan.js"></script>
+</head>
+<body>
+    <select id="province">
+        <option>1111</option>
+    </select>
+    <select id="city"></select>
+    <select id="town"></select>
+    <select id="street"></select>
+
+    <script type="text/javascript">
+    
+        var province = document.getElementById("province");
+        var city = document.getElementById("city");
+        var town = document.getElementById("town");
+        var street = document.getElementById("street");
+
+        var opts = {
+            els:[ province,city,town,street ],
+            areaList:areaList
+        };
+        console.log(opts);
+
+        AreaSelect(opts);
+   
+    </script>
+</body>
+</html>

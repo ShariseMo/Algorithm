@@ -1,4 +1,4 @@
-'use strict';
+
 /**
  * @author hsf
  *
@@ -14,8 +14,8 @@
    *
    */
   function areaCascade(arr, cur) {
-    var opArr = [defaultOpt];
-    var map = {};
+    var opArr = [defaultOpt];    //select中的option数组
+    var map = {};                //行政区域的map，对应省市区ID
     for (var i=0; i<arr.length; i++) {
       var item = arr[i];
       opArr.push('<option value=' + item.id + '>' + item.name + '</option>');
@@ -54,7 +54,7 @@
     // 行政区域数据
     var areaList = opts.areaList || {};
 
-    areaCascade(areaList, this.top);
+    areaCascade(areaList, els[0]);
   }
 
   /**
@@ -77,3 +77,6 @@
   // 导出api
   module.AreaSelect = AreaSelect;
 })(window || {});
+
+
+
